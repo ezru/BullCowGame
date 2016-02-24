@@ -40,7 +40,7 @@ int main(int32 argc, const char * argv[]) {
 
 // Splash game introduction
 void PrintIntro () {
-    int32 GameLevel;
+    int32 GameLevel = 1;
     std::cout << "\n Welcome to Bulls and Cows, a fun word game!\n\n";
     std::cout << "                     }    {           ____ \n";
     std::cout << "                     (o  o)          (o  o) \n";
@@ -57,20 +57,21 @@ void PrintIntro () {
     std::cout << "4. Nothing I can't do. \n\n";
     
     bool CorrectLevel = false;
-    do {
+    while (CorrectLevel == false) {
         std::cout << "Please choose your level: ";
         std::cin >> GameLevel;
-        std::cin.ignore();
-        if (std::cin.fail()){
+        if (std::cin.fail() || GameLevel > 4){
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             CorrectLevel = false;
-            std::cin.ignore();
             std::cout << "The value you entered is incorrect, please choose one of the listed numbers\n\n";
         }else {
             CorrectLevel = true;
         }
-    } while (CorrectLevel == false);
+    }
     
     BCGame.SetHiddenWord(GameLevel);
+    std::cout << std::endl;
     std::cout << "Can you guess the " << BCGame.GetHiddenWordLength();
     std::cout <<" letter isogram I am thinking of? \n";
     std::cout << std::endl;

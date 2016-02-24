@@ -44,9 +44,7 @@ FString FBullCowGame::SetHiddenWord(int level) {
     
     MyHiddenWord = myWord[level];
     MyMaxTries = DifficultyLevel[myWord[level]];
-    
-    std::cout << MyMaxTries;
-    
+        
     return myWord[1];
 }
 
