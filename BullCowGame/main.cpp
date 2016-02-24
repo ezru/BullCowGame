@@ -16,6 +16,7 @@ using FText = std::string;
 
 // prototyping because functions are outside class
 void PrintIntro();
+int32 GetLevel();
 FText GetValidGuess();
 void PlayGame();
 void PrintGameSummary();
@@ -40,7 +41,6 @@ int main(int32 argc, const char * argv[]) {
 
 // Splash game introduction
 void PrintIntro () {
-    int32 GameLevel = 1;
     std::cout << "\n Welcome to Bulls and Cows, a fun word game!\n\n";
     std::cout << "                     }    {           ____ \n";
     std::cout << "                     (o  o)          (o  o) \n";
@@ -56,7 +56,20 @@ void PrintIntro () {
     std::cout << "3. I am good at this game hit me. \n";
     std::cout << "4. Nothing I can't do. \n\n";
     
+    int32 GameLevel = GetLevel();
+    BCGame.SetHiddenWord(GameLevel);
+    std::cout << std::endl;
+    
+    std::cout << "Can you guess the " << BCGame.GetHiddenWordLength();
+    std::cout <<" letter isogram I am thinking of? \n";
+    std::cout << std::endl;
+    
+    return;
+}
+
+int32 GetLevel() {
     bool CorrectLevel = false;
+    int32 GameLevel = 0;
     while (CorrectLevel == false) {
         std::cout << "Please choose your level: ";
         std::cin >> GameLevel;
@@ -67,16 +80,11 @@ void PrintIntro () {
             std::cout << "The value you entered is incorrect, please choose one of the listed numbers\n\n";
         }else {
             CorrectLevel = true;
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            
         }
     }
-    
-    BCGame.SetHiddenWord(GameLevel);
-    std::cout << std::endl;
-    std::cout << "Can you guess the " << BCGame.GetHiddenWordLength();
-    std::cout <<" letter isogram I am thinking of? \n";
-    std::cout << std::endl;
-    
-    return;
+    return GameLevel;
 }
 
 void PlayGame() {
@@ -86,8 +94,6 @@ void PlayGame() {
     PrintIntro();
     
     int32 MaxTries = BCGame.GetMaxTries();  // Number of tries a player is allowed
-    
-    std::cout << MaxTries;
     
     FBullCowCount BullsAndCows; // return how many Bulls and Cows the player has achieved
     
